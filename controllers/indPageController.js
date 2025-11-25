@@ -19,11 +19,9 @@ export const createIndPageData = async (req, res) => {
 };
 
 // UPDATE Industries Data
-
 export const updateIndPageData = async (req, res) => {
   try {
     const { id } = req.params;
-
     const updatedContent = await IndPageModel.findByIdAndUpdate(
       id,
       req.body,
@@ -36,7 +34,6 @@ export const updateIndPageData = async (req, res) => {
         message: "Industries content not found"
       });
     }
-
     res.status(200).json({
       success: true,
       message: "Industries content updated successfully",
@@ -53,6 +50,24 @@ export const updateIndPageData = async (req, res) => {
 
 // GET Industries pages data
 export const getIndPageData = async (req, res) => {
-  const data = await IndPageModel.find();
+  const data = await IndPageModel.find({deleteitem:false});
   res.json(data);
 };
+
+// Delete Industries pages data
+export const deleteIndPageData = async (req, res) => {
+  try {
+    const deleted = await IndPageModel.findByIdAndUpdate(
+      req.params.id,
+      { deleteitem: true },
+      { new: true }
+    );
+
+    if (!deleted)
+      return res.status(404).json({ message: "Record not found" });
+
+    res.json({ message: "Soft Deleted", deleted });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
