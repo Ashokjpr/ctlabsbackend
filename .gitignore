@@ -49,5 +49,5 @@ pids
 # -------------------------
 # Uploads (Optional)
 # -------------------------
-uploads/
+# uploads/
 public/uploads/
