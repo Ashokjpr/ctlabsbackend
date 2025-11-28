@@ -2,8 +2,14 @@ import IndPageModel from "../models/IndustriesModel/IndPageModel.js";
 
 // CREATE Industries pages data
 export const createIndPageData = async (req, res) => {
+  const {pagename, title, keytitle, points }= req.body
   try {
-    const content = await IndPageModel.create(req.body);
+    const image = "/uploads/images/" + req.file.filename;
+    if (!image) {
+      return res.status(400).json({ success: false, message: "No image uploaded" });
+    }
+
+    const content = await IndPageModel.create({pagename, title, keytitle, points, image});
     res.status(201).json({
       success: true,
       message: "Industries content created successfully",
@@ -71,3 +77,48 @@ export const deleteIndPageData = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
+
+
+// Update images
+export const updateImages = async (req, res) => {
+  const { id } = req.params;
+  const { name, pagename } = req.body;
+  // console.log(id)
+  // console.log(req.body)
+
+  try {
+    // const image = req.file ? req.file.filename : null;
+    const image = "/uploads/images/" + req.file.filename;
+
+    if (!image) {
+      return res.status(400).json({ success: false, message: "No image uploaded" });
+    }
+    // HOME PAGE CASE
+       const  updatedImg = await IndPageModel.findByIdAndUpdate(
+          id,
+          { image: image },
+          { new: true }
+        ); 
+    
+    // Not found
+    if (!updatedImg) {
+      return res.status(404).json({
+        success: false,
+        message: "Image card not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Image updated successfully",
+      data: updatedImg,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error updating image",
+      error: error.message,
+    });
+  }
+};

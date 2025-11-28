@@ -1,12 +1,14 @@
 import express from "express";
-import { createIndPageData, getIndPageData, updateIndPageData, deleteIndPageData  } from "../controllers/indPageController.js";
+import { upload } from "../middleware/upload.js";
+import { createIndPageData, getIndPageData, updateIndPageData, deleteIndPageData,updateImages } from "../controllers/indPageController.js";
 
 const indpagerouter = express.Router();
 // Industries page  routing
-indpagerouter.post("/industries", createIndPageData);
+indpagerouter.post("/industries",upload.single("image"), createIndPageData);
 indpagerouter.get("/industries", getIndPageData);
 indpagerouter.put("/industries/:id", updateIndPageData);
 indpagerouter.delete("/industries/:id", deleteIndPageData)
+indpagerouter.put("/industries/cardimg/:id",upload.single("image"), updateImages)
 
 
 export default indpagerouter;

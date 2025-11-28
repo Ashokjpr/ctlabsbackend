@@ -5,6 +5,8 @@ const allPageSchema = new mongoose.Schema({
   title: { type: String, required: true },
   titledec: { type: String },
   subtitle: { type: String },
+  desktopbg: { type: String },
+  mobilebg: { type: String },
 },
   { timestamps: true },
 );
