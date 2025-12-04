@@ -50,8 +50,9 @@ router.post("/login", async (req, res) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
-    sameSite: "strict"
+    secure: true,          // REQUIRED on Vercel / HTTPS
+    sameSite: "none",      // REQUIRED for cross-domain cookie
+    path: "/",
   });
 
   res.json({ message: "Login successful" });
