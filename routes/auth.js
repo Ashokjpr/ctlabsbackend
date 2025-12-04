@@ -6,6 +6,10 @@ import adminAuth from "../middleware/adminAuth.js";
 
 const router = express.Router();
 
+
+console.log("JWT_SECRET from env:", process.env.JWT_SECRET);
+
+
 /* REGISTER */
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
