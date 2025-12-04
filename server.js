@@ -21,7 +21,6 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://localhost:3000",
     "https://customtechct.vercel.app"
   ],
   credentials: true 
