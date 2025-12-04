@@ -4,7 +4,7 @@ import IndPageModel from "../models/IndustriesModel/IndPageModel.js";
 export const createIndPageData = async (req, res) => {
   const {pagename, title, keytitle, points }= req.body
   try {
-    const image = "/uploads/images/" + req.file.filename;
+    const image = req.file.path;
     if (!image) {
       return res.status(400).json({ success: false, message: "No image uploaded" });
     }
@@ -87,8 +87,7 @@ export const updateImages = async (req, res) => {
   // console.log(req.body)
 
   try {
-    // const image = req.file ? req.file.filename : null;
-    const image = "/uploads/images/" + req.file.filename;
+    const image = req.file.path;
 
     if (!image) {
       return res.status(400).json({ success: false, message: "No image uploaded" });

@@ -1,6 +1,8 @@
+// MUST be first line
+import dotenv from "dotenv";
+dotenv.config();  // MUST RUN BEFORE ANY OTHER IMPORT
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import pageRoutes from "./routes/pageRoutes.js";
@@ -8,7 +10,6 @@ import authRoutes from "./routes/auth.js";
 import uploadImgRoutes from "./routes/uploadImgRoutes.js";
 import adminAuth from "./middleware/adminAuth.js";
 
-dotenv.config();
 connectDB();
 
 const app = express();
@@ -22,12 +23,8 @@ app.use(cors({
     "http://localhost:3000",
     "https://customtechct.vercel.app"
   ],
-  credentials: true
+  credentials: true 
 }));
-
-
-// make uploads folder public
-app.use("/uploads", express.static("uploads"));
 
 
 // Routes
@@ -39,6 +36,11 @@ app.use("/api/images", uploadImgRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend running...");
+});
+
+app.use((err, req, res, next) => {
+  console.error("🔥 GLOBAL ERROR:", err);
+  res.status(500).json({ success: false, error: err.message });
 });
 
 const PORT = process.env.PORT || 5000;

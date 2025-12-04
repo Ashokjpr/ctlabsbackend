@@ -4,14 +4,14 @@ import HomePageC1 from "../models/HomePageModel/HomePageC1.js";
 export const updateImages = async (req, res) => {
   const { id } = req.params;
   const { name, pagename } = req.body;
-  // console.log(id)
-  // console.log(req.body)
+  console.log(id)
+  console.log(req.body)
+  console.log("FILE:", req.file);
 
   try {
-    // const imagePath = req.file ? req.file.filename : null;
-    const imagePath = "/uploads/images/" + req.file.filename;
+    const imageUrl = req.file ? req.file.path : null;   // Cloudinary secure URL
 
-    if (!imagePath) {
+    if (!imageUrl) {
       return res.status(400).json({ success: false, message: "No image uploaded" });
     }
 
@@ -23,13 +23,13 @@ export const updateImages = async (req, res) => {
       if (name === "Mobile") {
         updatedImg = await HomePageC1.findByIdAndUpdate(
           id,
-          { mobilebg: imagePath },
+          { mobilebg: imageUrl },
           { new: true }
         );
       } else {
         updatedImg = await HomePageC1.findByIdAndUpdate(
           id,
-          { desktopbg: imagePath },
+          { desktopbg: imageUrl },
           { new: true }
         );
       }
@@ -41,13 +41,13 @@ export const updateImages = async (req, res) => {
       if (name === "Mobile") {
         updatedImg = await allPagesTextModel.findByIdAndUpdate(
           id,
-          { mobilebg: imagePath },
+          { mobilebg: imageUrl },
           { new: true }
         );
       } else {
         updatedImg = await allPagesTextModel.findByIdAndUpdate(
           id,
-          { desktopbg: imagePath },
+          { desktopbg: imageUrl },
           { new: true }
         );
       }
@@ -64,7 +64,7 @@ export const updateImages = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Image updated successfully",
+      message: "Image uploaded to Cloudinary & saved in MongoDB",
       data: updatedImg,
     });
 
