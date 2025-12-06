@@ -60,7 +60,12 @@ router.post("/login", async (req, res) => {
 
 /* LOGOUT */
 router.post("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,     // required on Vercel (HTTPS)
+    sameSite: "None", // required for cross-site cookie
+    // path: "/"         // MUST match login cookie path
+  });
   res.json({ message: "Logged out successfully" });
 });
 
