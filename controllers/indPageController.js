@@ -7,7 +7,7 @@ export const createIndPageData = async (req, res) => {
     const image = req.file.path;
     if (!image) {
       return res.status(400).json({ success: false, message: "No image uploaded" });
-    }
+    } 
 
     const content = await IndPageModel.create({pagename, title, keytitle, points, image});
     res.status(201).json({

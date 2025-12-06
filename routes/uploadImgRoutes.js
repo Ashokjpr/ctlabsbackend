@@ -5,6 +5,6 @@ import { updateImages } from "../controllers/imagesController.js";
 
 const router = express.Router();
 
-router.put("/upload/:id", upload.single("video"), updateImages);
+router.put("/upload/:id", upload.single("image"), updateImages);
 
 export default router;
