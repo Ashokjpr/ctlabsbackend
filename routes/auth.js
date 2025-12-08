@@ -70,13 +70,13 @@ router.post("/logout", (req, res) => {
 });
 
 /* GET USER INFO (PROTECTED) */
-router.get("/me",  async (req, res) => {
+router.get("/me", adminAuth, async (req, res) => {
   const user = await User.findById(req.user.id).select("-password");
   res.json(user);
 });
 
 // Protected Route Example 
-router.get("/admin/dashboard", (req, res) => {
+router.get("/admin/dashboard", adminAuth, (req, res) => {
   res.json({ message: "Welcome Admin", adminId: req.user.id });
 });
 
