@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
     httpOnly: true,
     secure: true,          // REQUIRED on Vercel / HTTPS
     sameSite: "none",      // REQUIRED for cross-domain cookie
-    // path: "/",
+    path: "/",
   });
 
   res.json({ message: "Login successful" });
