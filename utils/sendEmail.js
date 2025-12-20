@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-console.log("ENV CHECK:", process.env.EMAIL_USER, process.env.EMAIL_PASS);
+// console.log("ENV CHECK:", process.env.EMAIL_USER, process.env.EMAIL_PASS);
 
 
 const sendEmail = async (to, subject, html) => {
@@ -15,7 +15,7 @@ const sendEmail = async (to, subject, html) => {
         });
 
     await transporter.sendMail({
-      from: `"CUSTOM TECH LABS" <${process.env.EMAIL_USER}>`,
+      from: `"Custom Tech Labs" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,
